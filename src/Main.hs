@@ -7,8 +7,6 @@ module Main where
 import Control.Monad (forever, void)
 import Control.Monad.IO.Class
 import Control.Monad.Trans.State
-import Data.Functor ((<&>))
-import Data.IORef
 
 class (Monad m) => MonadGame m where
     getIn :: m String
@@ -37,10 +35,10 @@ loop = do
     logLN "Welcome to guessing game!"
     forever $ do
         logLN "Please enter a number:"
-        i <- getIn
-        if i == "5"
+        i <- read <$> getIn
+        if i == 5
             then update 1 >> logScore
-            else logLN "You Incorrect :)"
+            else logLN "incorrect :)"
 
 newGame :: GameEnv
 newGame = GameEnv{score = 0}
